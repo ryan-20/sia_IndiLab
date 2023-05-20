@@ -22,7 +22,7 @@ Class UserController extends Controller {
     {
         // $users = User::all();
         $users = DB::connection('mysql')
-        ->select("Select * from customer");
+        ->select("Select * from customers");
 
         // return response()->json($users, 200);
         return $this->successResponse($users);
@@ -41,10 +41,9 @@ Class UserController extends Controller {
     public function add(Request $request)
     {
         $rules = [
-            'customer_name' => 'required|max:20',
+            'customer_name' => 'required|max:50',
             'customer_age' => 'required|max:3',
-            'customer_sex' => 'required|in:M,F',
-            'customer_id' => 'required|max:2',
+            'customer_sex' => 'required|in:Male,Female',
         ];
 
         $this->validate($request,$rules);
@@ -60,17 +59,20 @@ Class UserController extends Controller {
         $user = User::findOrFail($id);
         $user->delete();
 
-        return $this->errorResponse('User ID Does Not Exists', Response::HTTP_NOT_FOUND);
+        return $this->successResponse($user);
+
+
+        //return $this->errorResponse('User ID Does Not Exists', Response::HTTP_NOT_FOUND);
+
     }
 
     // update records
     public function update(Request $request,$id)
     {
         $rules = [
-            'customer_name' => 'required|max:20',
+            'customer_name' => 'required|max:50',
             'customer_age' => 'required|max:3',
-            'customer_sex' => 'required|in:M,F',
-            'customer_id' => 'required|max:2',
+            'customer_sex' => 'required|in:Male,Female',
         ]; 
         $this->validate($request, $rules);
         $user = User;;findOrFail($id);
